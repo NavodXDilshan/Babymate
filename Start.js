@@ -1,46 +1,61 @@
-import React from 'react';
-import { View } from 'react-native';
-
+import * as React from 'react';
+import { TouchableOpacity, Text, View, SafeAreaView, StyleSheet, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text } from 'react-native';
 
 
-import Button from './component/SButton';
-import ImageViewer from './component/ImageViewer';
 const PlaceholderImage = require('./assets/logo.png');
 
 
-
-const StartScreen = ({ navigation }) => {
+function Start({ navigation }) {
   return (
-    <View style={styles.container}>
-       <View style={styles.imageContainer}>
-       <ImageViewer placeholderImageSource={PlaceholderImage} />
+    <SafeAreaView style={styles.container}>
+      <View style={styles.content}>  
+      <View style={styles.imageContainer}>
+        <Image source ={PlaceholderImage} style={styles.image} />
       </View>
-      <View style={styles.footerContainer}>
-        
-        <Button label="BabyMate" />
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Login')}
+          style={styles.buttonContainer}
+          activeOpacity={0.5}
+        >
+          <Text style={styles.buttonText}>BabyMate</Text>
+        </TouchableOpacity>
       </View>
-      <StatusBar style="light" />
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#25292e',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonContainer: {
+    marginTop: 30,
+    paddingHorizontal: 30, // Adjust the value as needed to shorten the button width
+    paddingVertical: 15,
+    borderRadius: 10,
+    elevation: 3,
+    backgroundColor: '#6CB4EE',
+  },
+  buttonText: {
+    color: '#ffffff',
+    fontSize: 20,
+    textAlign: 'center',
   },
 
-  footerContainer: {
-    flex: 1/3,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    marginBottom: 20,
-  },
- 
+  image: {
+    width: 248*1.2,
+    height: 238*1.2,
+    borderRadius: 10,
+    
+},
 });
 
 export default Start;

@@ -1,12 +1,27 @@
-import * as React from 'react';
-import { useState } from 'react';
-import { TouchableOpacity, Text, View, SafeAreaView, StyleSheet, Image, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import { TouchableOpacity, Text, View, SafeAreaView, StyleSheet, Image, TextInput, Alert } from 'react-native';
 
 const PlaceholderImage = require('./assets/logo.png');
 
-function Login({ navigation }) {
-  const [email, setEmail] = useState('');
-  const [passWord,setPassWord] = useState(''); 
+function Calculator({ navigation }) {
+  const [Weight, setWeight] = useState('');
+  const [Height, setHeight] = useState('');
+
+  const handleCalculate = () => {
+    const bmi = (Weight / (Height * Height)).toFixed(2); // Calculate BMI with two decimal places
+
+    // Show the pop-up box
+    Alert.alert(
+      'Your BMI has been calculated',
+      `Your BMI is ${bmi}`,
+      [
+        { text: 'OK', onPress: () => console.log('OK Pressed') },
+        { text: 'More Info', onPress: () => navigation.navigate('BMIChart') }
+      ],
+      { cancelable: false }
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
@@ -15,44 +30,35 @@ function Login({ navigation }) {
           <View style={styles.lineBreak} />
           <Text>BabyMate</Text>
         </View>
-        
+
         <View style={styles.inputContainer}>
-          <Text>Email :</Text>
+          <Text>Weight (kgs) :</Text>
           <TextInput
-            value={email}
-            onChangeText={(email) => setEmail(email)}
-            placeholder={'Type your Email here'}
+            value={Weight}
+            onChangeText={setWeight}
+            placeholder={'Weight in Kgs'}
             style={styles.input}
           />
 
-            <View style={styles.lineBreak} />
-            <Text>Password :</Text>
-            <TextInput
-            value={passWord}
-            onChangeText={(passWord) => setPassWord(passWord)}
-            placeholder={'Password'}
+          <View style={styles.lineBreak} />
+          <Text>Height (m) :</Text>
+          <TextInput
+            value={Height}
+            onChangeText={setHeight}
+            placeholder={'Height in Meters'}
             style={styles.input}
-          />    
-          
+          />
         </View>
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Dashboard')}
-            activeOpacity={0.5}>
-            <Text style={styles.buttonText}>Login</Text>
+            onPress={handleCalculate}
+            activeOpacity={0.5}
+          >
+            <Text style={styles.buttonText}>Calculate</Text>
           </TouchableOpacity>
         </View>
 
-        <Text>Don't have an account? Sing Up from here !</Text>
-        <View style={styles.lineBreak} />
-        <View style={styles.buttonSContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Register')}
-            activeOpacity={0.5}>
-            <Text style={styles.buttonText}>Register</Text>
-          </TouchableOpacity>
-        </View>
       </View>
     </SafeAreaView>
   );
@@ -76,10 +82,9 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   buttonContainer: {
-    
     alignSelf: 'flex-end',
     alignSelf: 'center',
-    marginBottom: 50,
+    marginBottom: 150,
     paddingHorizontal: 30,
     paddingVertical: 15,
     borderRadius: 10,
@@ -98,7 +103,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   inputContainer: {
-    flex : 1,
+    flex: 1,
     alignSelf: 'flex-start',
     marginTop: 10,
     paddingHorizontal: 30,
@@ -113,28 +118,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: 250,
   },
-
   lineBreak: {
     height: 15,
   },
-
-  buttonSContainer: {
-    
-    alignSelf: 'flex-end',
-    alignSelf: 'center',
-    marginBottom: 50,
-    paddingHorizontal: 30,
-    paddingVertical: 15,
-    borderRadius: 10,
-    elevation: 3,
-    backgroundColor: '#318CE7',
-  },
-  buttonSText: {
-    color: '#ffffff',
-    fontSize: 16,
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
 });
 
-export default Login;
+export default Calculator;

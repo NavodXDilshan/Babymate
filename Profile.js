@@ -4,9 +4,11 @@ import { TouchableOpacity, Text, View, SafeAreaView, StyleSheet, Image, TextInpu
 
 const PlaceholderImage = require('./assets/logo.png');
 
-function Login({ navigation }) {
+function Profile({ navigation }) {
   const [email, setEmail] = useState('');
   const [passWord,setPassWord] = useState(''); 
+  const [firstName,setFirstName] = useState(''); 
+  const [lastName,setLastName] = useState(''); 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
@@ -16,7 +18,24 @@ function Login({ navigation }) {
           <Text>BabyMate</Text>
         </View>
         
-        <View style={styles.inputContainer}>
+        <View style={[styles.inputContainer]}>
+
+        <Text>First Name :</Text>
+          <TextInput
+            value={firstName}
+            onChangeText={(firstName) => setFirstName(firstName)}
+            placeholder={'Type your First Name here'}
+            style={styles.input}
+          />
+           <View style={styles.lineBreak} />
+          <Text>Last Name :</Text>
+          <TextInput
+            value={lastName}
+            onChangeText={(lastName) => setLastName(lastName)}
+            placeholder={'Type your Last Name here'}
+            style={styles.input}
+          />
+           <View style={styles.lineBreak} />
           <Text>Email :</Text>
           <TextInput
             value={email}
@@ -35,20 +54,11 @@ function Login({ navigation }) {
           />    
           
         </View>
-
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Dashboard')}
-            activeOpacity={0.5}>
-            <Text style={styles.buttonText}>Login</Text>
-          </TouchableOpacity>
-        </View>
-
-        <Text>Don't have an account? Sing Up from here !</Text>
+        <View style={styles.lineBreak} />
         <View style={styles.lineBreak} />
         <View style={styles.buttonSContainer}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Register')}
+            onPress={() => navigation.navigate('Login')}
             activeOpacity={0.5}>
             <Text style={styles.buttonText}>Register</Text>
           </TouchableOpacity>
@@ -74,24 +84,9 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     marginTop: 50,
-  },
-  buttonContainer: {
     
-    alignSelf: 'flex-end',
-    alignSelf: 'center',
-    marginBottom: 50,
-    paddingHorizontal: 30,
-    paddingVertical: 15,
-    borderRadius: 10,
-    elevation: 3,
-    backgroundColor: '#6CB4EE',
   },
-  buttonText: {
-    color: '#ffffff',
-    fontSize: 16,
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
+ 
   image: {
     width: 248 * 0.5,
     height: 238 * 0.5,
@@ -100,8 +95,9 @@ const styles = StyleSheet.create({
   inputContainer: {
     flex : 1,
     alignSelf: 'flex-start',
-    marginTop: 10,
+    marginTop: -150,
     paddingHorizontal: 30,
+    
   },
   input: {
     borderWidth: 2,
@@ -119,17 +115,16 @@ const styles = StyleSheet.create({
   },
 
   buttonSContainer: {
-    
-    alignSelf: 'flex-end',
     alignSelf: 'center',
+    marginTop: 10,
     marginBottom: 50,
     paddingHorizontal: 30,
     paddingVertical: 15,
     borderRadius: 10,
     elevation: 3,
-    backgroundColor: '#318CE7',
+    backgroundColor: '#6CB4EE',
   },
-  buttonSText: {
+  buttonText: {
     color: '#ffffff',
     fontSize: 16,
     textAlign: 'center',
@@ -137,4 +132,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default Profile;
