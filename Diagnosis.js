@@ -34,7 +34,7 @@ function Diagnosis({ navigation }) {
       
         <View style={styles.buttonSContainer}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Register')}
+            onPress={() => navigation.navigate('Autism')}
             activeOpacity={0.5}>
             <Text style={styles.buttonText}>Autism Spectrum</Text>
           </TouchableOpacity>

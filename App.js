@@ -17,6 +17,8 @@ import Diagnosis from './Diagnosis';
 import Sight from './Sight';
 import Hearing from './Hearing';
 import BMIChart from './BMIChart';
+import Autism from './Autism';
+import Record from './Record';
 
 const Stack = createStackNavigator();
 
@@ -149,6 +151,36 @@ function App() {
           component={BMIChart}
           options={{
             title: 'BMIChart', //Set Header Title
+            headerStyle: {
+              backgroundColor: '#6CB4EE', //Set Header color
+            },
+            headerTintColor: '#fff', //Set Header text color
+            headerTitleStyle: {
+              fontWeight: 'bold', //Set Header text style
+            },
+          }}
+        />
+
+          <Stack.Screen
+          name="Autism"
+          component={Autism}
+          options={{
+            title: 'Autism', //Set Header Title
+            headerStyle: {
+              backgroundColor: '#6CB4EE', //Set Header color
+            },
+            headerTintColor: '#fff', //Set Header text color
+            headerTitleStyle: {
+              fontWeight: 'bold', //Set Header text style
+            },
+          }}
+        />
+
+          <Stack.Screen
+          name="Record"
+          component={Record}
+          options={{
+            title: 'Record', //Set Header Title
             headerStyle: {
               backgroundColor: '#6CB4EE', //Set Header color
             },

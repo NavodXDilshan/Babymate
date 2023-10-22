@@ -32,7 +32,7 @@ function Dashboard({ navigation }) {
       
         <View style={styles.buttonSContainer}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Register')}
+            onPress={() => navigation.navigate('Record')}
             activeOpacity={0.5}>
             <Text style={styles.buttonText}>Child Health Development Record</Text>
           </TouchableOpacity>
