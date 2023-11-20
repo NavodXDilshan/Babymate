@@ -38,7 +38,9 @@ function Login({ navigation }) {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Dashboard')}
+            onPress={() => navigation.navigate('Dashboard',{
+              paramKey: email
+             })}
             activeOpacity={0.5}>
             <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>

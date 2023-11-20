@@ -19,6 +19,8 @@ import Hearing from './Hearing';
 import BMIChart from './BMIChart';
 import Autism from './Autism';
 import Record from './Record';
+import ColorBlind from './ColorBlind';
+import Profile from './Profile';
 
 const Stack = createStackNavigator();
 
@@ -181,6 +183,36 @@ function App() {
           component={Record}
           options={{
             title: 'Record', //Set Header Title
+            headerStyle: {
+              backgroundColor: '#6CB4EE', //Set Header color
+            },
+            headerTintColor: '#fff', //Set Header text color
+            headerTitleStyle: {
+              fontWeight: 'bold', //Set Header text style
+            },
+          }}
+        />
+
+          <Stack.Screen
+          name="ColorBlind"
+          component={ColorBlind}
+          options={{
+            title: 'ColorBlind', //Set Header Title
+            headerStyle: {
+              backgroundColor: '#6CB4EE', //Set Header color
+            },
+            headerTintColor: '#fff', //Set Header text color
+            headerTitleStyle: {
+              fontWeight: 'bold', //Set Header text style
+            },
+          }}
+        />
+
+          <Stack.Screen
+          name="Profile"
+          component={Profile}
+          options={{
+            title: 'Profile', //Set Header Title
             headerStyle: {
               backgroundColor: '#6CB4EE', //Set Header color
             },

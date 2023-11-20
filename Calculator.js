@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, Text, View, SafeAreaView, StyleSheet, Image, TextInput, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const PlaceholderImage = require('./assets/logo.png');
 
-function Calculator({ navigation }) {
+function Calculator() {
+  const navigation = useNavigation();
   const [Weight, setWeight] = useState('');
   const [Height, setHeight] = useState('');
+  const [age, setAge] = useState('');
 
   const handleCalculate = () => {
     const bmi = (Weight / (Height * Height)).toFixed(2); // Calculate BMI with two decimal places
@@ -16,7 +19,9 @@ function Calculator({ navigation }) {
       `Your BMI is ${bmi}`,
       [
         { text: 'OK', onPress: () => console.log('OK Pressed') },
-        { text: 'More Info', onPress: () => navigation.navigate('BMIChart') }
+        { text: 'More Info', onPress: () => navigation.navigate('BMIChart',{
+          paramKey: bmi
+         }) }
       ],
       { cancelable: false }
     );
@@ -45,9 +50,18 @@ function Calculator({ navigation }) {
           <TextInput
             value={Height}
             onChangeText={setHeight}
-            placeholder={'Height in Meters'}
+            placeholder={'Height in cm'}
             style={styles.input}
           />
+          <View style={styles.lineBreak} />
+          <Text>Age :</Text>
+          <TextInput
+            value={age}
+            onChangeText={(age) => setAge(age)}
+            placeholder={'Type the baby\'s age'}
+            style={styles.input}
+          />
+           <View style={styles.lineBreak} />
         </View>
 
         <View style={styles.buttonContainer}>
@@ -55,6 +69,7 @@ function Calculator({ navigation }) {
             onPress={handleCalculate}
             activeOpacity={0.5}
           >
+            
             <Text style={styles.buttonText}>Calculate</Text>
           </TouchableOpacity>
         </View>
@@ -84,7 +99,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignSelf: 'flex-end',
     alignSelf: 'center',
-    marginBottom: 150,
+    marginBottom: 140,
     paddingHorizontal: 30,
     paddingVertical: 15,
     borderRadius: 10,
@@ -104,8 +119,8 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     flex: 1,
-    alignSelf: 'flex-start',
-    marginTop: 10,
+    //alignSelf: 'flex-start',
+    marginTop: -50,
     paddingHorizontal: 30,
   },
   input: {

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { ScrollView,TouchableOpacity, Text, View, SafeAreaView, StyleSheet, Image, TextInput } from 'react-native';
+import { ScrollView,TouchableOpacity, Text, View, SafeAreaView, StyleSheet, Image, TextInput, Alert } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 const PlaceholderImage = require('./assets/logo.png');
 
-function Hearing({ navigation }) {
+function Sight({ navigation }) {
     const [checked1, setChecked1] = useState(false);
     const [checked2, setChecked2] = useState(false);
     const [checked3, setChecked3] = useState(false);
@@ -15,46 +15,152 @@ function Hearing({ navigation }) {
     const [checked8, setChecked8] = useState(false);
     const [checked9, setChecked9] = useState(false);
     const [checked10, setChecked10] = useState(false);
+    const [count, setCount] = useState(0);
    
+    const handleCalculate = () => {
+      const sight = (100-(count / 10)*100).toFixed(2); // Calculate BMI with two decimal places
   
+      // Show the pop-up box
+      Alert.alert(
+        'Calculation Complete',
+        `You child has a ${sight}% probability of having weakened hearing`,
+        console.log(count),
+        [
+          { text: 'OK', onPress: () => console.log('OK Pressed') },
+          { text: 'More Info', onPress: () => navigation.navigate('BMIChart') }
+        ],
+        { cancelable: false }
+      );
+    };
+
     const handleCheckBox1 = () => {
       setChecked1(!checked1);
+      if (!checked1) {
+        // Checkbox is being checked
+        setCount(count + 1);
+      }
+      else {
+        // Checkbox is being unchecked
+        setChecked1(false);
+        setCount(count - 1);
+      }
     };
   
     const handleCheckBox2 = () => {
       setChecked2(!checked2);
+      if (!checked2) {
+        // Checkbox is being checked
+        setCount(count + 1);
+      }
+      else {
+        // Checkbox is being unchecked
+        setChecked2(false);
+        setCount(count - 1);
+      }
     };
 
     const handleCheckBox3 = () => {
         setChecked3(!checked3);
+        if (!checked3) {
+          // Checkbox is being checked
+          setCount(count + 1);
+        }
+        else {
+          // Checkbox is being unchecked
+          setChecked3(false);
+          setCount(count - 1);
+        }
       };
 
       const handleCheckBox4 = () => {
         setChecked4(!checked4);
+        if (!checked4) {
+          // Checkbox is being checked
+          setCount(count + 1);
+        }
+        else {
+          // Checkbox is being unchecked
+          setChecked4(false);
+          setCount(count - 1);
+        }
       };
 
       const handleCheckBox5 = () => {
         setChecked5(!checked5);
+        if (!checked5) {
+          // Checkbox is being checked
+          setCount(count + 1);
+        }
+        else {
+          // Checkbox is being unchecked
+          setChecked5(false);
+          setCount(count - 1);
+        }
       };
 
       const handleCheckBox6 = () => {
         setChecked6(!checked6);
+        if (!checked6) {
+          // Checkbox is being checked
+          setCount(count + 1);
+        }
+        else {
+          // Checkbox is being unchecked
+          setChecked6(false);
+          setCount(count - 1);
+        }
       };
 
       const handleCheckBox7 = () => {
         setChecked7(!checked7);
+        if (!checked7) {
+          // Checkbox is being checked
+          setCount(count + 1);
+        }
+        else {
+          // Checkbox is being unchecked
+          setChecked7(false);
+          setCount(count - 1);
+        }
       };
 
       const handleCheckBox8 = () => {
         setChecked8(!checked8);
+        if (!checked8) {
+          // Checkbox is being checked
+          setCount(count + 1);
+        }
+        else {
+          // Checkbox is being unchecked
+          setChecked8(false);
+          setCount(count - 1);
+        }
       };
 
       const handleCheckBox9 = () => {
         setChecked9(!checked9);
+        if (!checked9) {
+          // Checkbox is being checked
+          setCount(count + 1);
+        }
+        else {
+          // Checkbox is being unchecked
+          setChecked9(false);
+          setCount(count - 1);
+        }
       };
 
       const handleCheckBox10 = () => {
         setChecked10(!checked10);
+        if (!checked10) {
+          // Checkbox is being checked
+          setCount(count + 1);
+        }
+        else {
+          // Checkbox is being unchecked
+          setChecked10(false);
+          setCount(count - 1);
+        }
       };
 
     
@@ -70,7 +176,7 @@ function Hearing({ navigation }) {
         <View style={styles.lineBreak} />
         <View style={styles.lineBreak} />
         <Text style={styles.text}>Answer the questions according</Text>
-        <Text style={styles.text}>to the Hearing patterns of the child</Text>
+        <Text style={styles.text}>to the behavior of the child</Text>
         <View style={styles.boxContainer}>
         <CheckBox
         title="Does the child register loud noises? "
@@ -78,6 +184,7 @@ function Hearing({ navigation }) {
         checkedColor="green"
         onPress={handleCheckBox1}
       />
+        
         <CheckBox
         title="Has your child start to recognize or respond to consistent or continous sounds?"
         checked={checked2}
@@ -114,41 +221,41 @@ function Hearing({ navigation }) {
       />
 
         <CheckBox
-        title="Does the child seems inquisitive of the sources of sounds or voices?"
+        title="Does the child respond to simple commands like 'No' or 'Bye'?"
         checked={checked7}
         checkedColor="green"
         onPress={handleCheckBox7}
       />
 
         <CheckBox
-        title="Does the child respond positively toward rhythmic tones?"
+        title="Does the child seems inquisitive of the sources of sounds or voices?"
         checked={checked8}
         checkedColor="green"
         onPress={handleCheckBox8}
       />
 
         <CheckBox
-        title="Does the child respond to his name?"
+        title="Does the child respond positively toward rhythmic tones?"
         checked={checked9}
         checkedColor="green"
         onPress={handleCheckBox9}
       />
 
         <CheckBox
-        title="Does the child respond to simple commands like 'No' or 'Bye'?"
+        title="Does the child respond to his name?"
+
         checked={checked10}
         checkedColor="green"
         onPress={handleCheckBox10}
       />
 
         </View>
-        
-      
-        <View style={styles.buttonSContainer}>
+        <View style={styles.lineBreak} />
+        <View style={styles.buttonContainer}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Register')}
+            onPress={handleCalculate}
             activeOpacity={0.5}>
-            <Text style={styles.buttonText}>Submit</Text>
+            <Text style={styles.buttonText}>Calculate</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -221,7 +328,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     
   },
+  buttonContainer: {
+    
+    alignSelf: 'flex-end',
+    alignSelf: 'center',
+    marginBottom: 50,
+    paddingHorizontal: 30,
+    paddingVertical: 15,
+    borderRadius: 10,
+    elevation: 3,
+    backgroundColor: '#6CB4EE',
+  },
 
 });
 
-export default Hearing;
+export default Sight;

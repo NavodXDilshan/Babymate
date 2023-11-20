@@ -4,6 +4,8 @@ import { ScrollView,TouchableOpacity, Text, View, SafeAreaView, StyleSheet, Imag
 import { CheckBox } from 'react-native-elements';
 const PlaceholderImage = require('./assets/logo.png');
 
+
+
 function Sight({ navigation }) {
     const [checked1, setChecked1] = useState(false);
     const [checked2, setChecked2] = useState(false);
@@ -24,12 +26,13 @@ function Sight({ navigation }) {
       Alert.alert(
         'Calculation Complete',
         `You child has a ${sight}% probability of having weakened sight`,
-        console.log(count),
+        
         [
           { text: 'OK', onPress: () => console.log('OK Pressed') },
-          { text: 'More Info', onPress: () => navigation.navigate('BMIChart') }
+          { text: 'Try the ColorBlind Test', onPress: () => navigation.navigate('ColorBlind') }
         ],
-        { cancelable: false }
+        { cancelable: false },
+        console.log(count),
       );
     };
 

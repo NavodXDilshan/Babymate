@@ -8,8 +8,11 @@ function Dashboard({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
+        
         <View style={styles.imageContainer}>
-          <Image source={PlaceholderImage} style={styles.image} />
+        <TouchableOpacity
+        onPress={() => navigation.navigate('Profile')}>
+          <Image source={PlaceholderImage} style={styles.image} /></TouchableOpacity>
           <View style={styles.lineBreak} />
           <Text>BabyMate</Text>
         </View>

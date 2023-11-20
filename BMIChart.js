@@ -3,15 +3,18 @@ import { useState } from 'react';
 import { TouchableOpacity, Text, View, SafeAreaView, StyleSheet, Image, TextInput } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { ScrollView } from 'react-native-gesture-handler';
-
+import { useNavigation } from '@react-navigation/native';
 
 const PlaceholderImage = require('./assets/logo.png');
 
-function BMIChart({ navigation }) {
+function BMIChart({ route }) {
   
  
   const [age, setAge] = useState('');
   const [bmi, setBmi] = useState('');
+
+  const navigation = useNavigation();
+  const paramKeyValue = route.params.paramKey;
 
 
     
@@ -28,7 +31,7 @@ function BMIChart({ navigation }) {
           },
 
           {
-            data: [bmi,bmi,bmi,bmi,bmi,bmi,bmi], // NaN to leave the last data point empty
+            data: [paramKeyValue,paramKeyValue,paramKeyValue,paramKeyValue,paramKeyValue,paramKeyValue,paramKeyValue], // NaN to leave the last data point empty
             color: (opacity = 1) => `rgba(0, 255, 0, ${opacity})`, // Set the line color for data2
           },
         ],
@@ -53,59 +56,27 @@ function BMIChart({ navigation }) {
             </View>
            
             <LineChart
-              data={data}
-              width={320}
-              height={220}
-              chartConfig={{
-                backgroundGradientFrom: '#ffffff',
-                backgroundGradientTo: '#ffffff',
-                decimalPlaces: 0,
-                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                style: {
-                  borderRadius: 16,
-                },
-              }}
-              bezier
-              style={styles.chart}
-              fromZero={false} // Ensure the y-axis starts from zero
-              yLabelsOffset={10} // Adjust the offset of y-axis labels
-              xAxisLabel="m" // Specify the x-axis label
-              yAxisLabel="BMI " // Specify the y-axis label
-            />
+  data={data}
+  width={500} // Adjust the width to your desired value
+  height={500} // Adjust the height to your desired value
+  chartConfig={{
+    backgroundGradientFrom: '#ffffff',
+    backgroundGradientTo: '#ffffff',
+    decimalPlaces: 0,
+    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+    style: {
+      borderRadius: 16,
+    },
+  }}
+  bezier
+  style={styles.chart}
+  fromZero={false}
+  yLabelsOffset={10}
+  xAxisLabel="m"
+  yAxisLabel="BMI"
+/>
              
           </View>
-          <ScrollView>
-          <Text>Age :</Text>
-          <TextInput
-            value={age}
-            onChangeText={(age) => setAge(age)}
-            placeholder={'Type the baby\'s age'}
-            style={styles.input}
-          />
-           <View style={styles.lineBreak} />
-           <Text>BMI :</Text>
-           <TextInput
-            value={bmi}
-            onChangeText={(bmi) => setBmi(bmi)}
-            placeholder={'Type the baby\'s BMI'}
-            style={styles.input}
-          />
-
-          
-
-          <View style={styles.buttonContainer}>
-          <TouchableOpacity
-
-            activeOpacity={0.5}
-          >
-            <Text style={styles.buttonText}>Calculate</Text>
-          </TouchableOpacity>
-        </View>
-        
-
-
-          </ScrollView>
-          
         </SafeAreaView>
       );
   }
@@ -115,7 +86,7 @@ function BMIChart({ navigation }) {
       flex: 1,
       justifyContent: 'top',
       alignItems: 'center',
-      backgroundColor: 'white'
+      backgroundColor: 'white' 
 
     },
     
@@ -139,6 +110,7 @@ function BMIChart({ navigation }) {
      alignItems:'center',
       marginVertical: 40,
       borderRadius: 16,
+      
     },
 
     text: {

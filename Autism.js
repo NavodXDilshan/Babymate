@@ -30,12 +30,24 @@ function Autism({ navigation }) {
     const [count, setCount] = useState(0);
    
     const handleCalculate = () => {
-      const sight = ((count / 20)*100).toFixed(2); // Calculate BMI with two decimal places
+      const autismCount = (20-count).toFixed(2); // Calculate BMI with two decimal places
   
+      let riskLevel;
+
+      if (autismCount >= 0 && autismCount <= 2) {
+       riskLevel = 'Low risk';
+      } else if (autismCount >= 3 && autismCount <= 7) {
+       riskLevel = 'Medium risk';
+      } else {
+      riskLevel = 'High risk';
+      }
+
       // Show the pop-up box
       Alert.alert(
         'Calculation Complete',
-        `You child has a ${count}% probability of having weakened sight`,
+        `Your child has a ${riskLevel} of suffering from Autism`,
+
+       
         console.log(count),
         [
           { text: 'OK', onPress: () => console.log('OK Pressed') },
@@ -43,6 +55,7 @@ function Autism({ navigation }) {
         ],
         { cancelable: false }
       );
+     
     };
 
     const handleCheckBox1 = () => {

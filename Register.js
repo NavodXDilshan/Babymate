@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { TouchableOpacity, Text, View, SafeAreaView, StyleSheet, Image, TextInput } from 'react-native';
+import {db} from './firebaseConfig';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const PlaceholderImage = require('./assets/logo.png');
 
