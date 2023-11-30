@@ -1,16 +1,30 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { TouchableOpacity, Text, View, SafeAreaView, StyleSheet, Image, TextInput } from 'react-native';
+import { doc, setDoc,collection, onSnapshot } from "firebase/firestore"; 
 import {db} from './firebaseConfig';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { ScrollView } from 'react-native-gesture-handler';
 
 const PlaceholderImage = require('./assets/logo.png');
 
 function Register({ navigation }) {
   const [email, setEmail] = useState('');
   const [passWord,setPassWord] = useState(''); 
-  const [firstName,setFirstName] = useState(''); 
-  const [lastName,setLastName] = useState(''); 
+  const [userName,setUserName] = useState(''); 
+  const [childName,setChildName] = useState(''); 
+  const [bday,setBday] = useState(''); 
+
+  function create(){
+    setDoc(doc(db, email, "profile"), {
+      email: email,
+      passWord: passWord,
+      userName: userName,
+      childName:childName,
+      bday:bday
+    });}
+
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
@@ -20,21 +34,22 @@ function Register({ navigation }) {
           <Text>BabyMate</Text>
         </View>
         
+        <ScrollView>
         <View style={[styles.inputContainer]}>
 
-        <Text>First Name :</Text>
+        <Text>Parent's Name :</Text>
           <TextInput
-            value={firstName}
-            onChangeText={(firstName) => setFirstName(firstName)}
-            placeholder={'Type your First Name here'}
+            value={userName}
+            onChangeText={(userName) => setUserName(userName)}
+            placeholder={'Type the Name here'}
             style={styles.input}
           />
            <View style={styles.lineBreak} />
-          <Text>Last Name :</Text>
+          <Text>Name of the child :</Text>
           <TextInput
-            value={lastName}
-            onChangeText={(lastName) => setLastName(lastName)}
-            placeholder={'Type your Last Name here'}
+            value={childName}
+            onChangeText={(childName) => setChildName(childName)}
+            placeholder={'Type the Name here'}
             style={styles.input}
           />
            <View style={styles.lineBreak} />
@@ -54,16 +69,29 @@ function Register({ navigation }) {
             placeholder={'Password'}
             style={styles.input}
           />    
+
+            <View style={styles.lineBreak} />
+            <Text>Birthday of the child :</Text>
+            <TextInput
+            value={bday}
+            onChangeText={(bday) => setBday(bday)}
+            placeholder={'DD/MM/YYYY'}
+            style={styles.input}
+          /> 
           
-        </View>
+        </View></ScrollView>
         <View style={styles.lineBreak} />
         <View style={styles.lineBreak} />
         <View style={styles.buttonSContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Login')}
-            activeOpacity={0.5}>
-            <Text style={styles.buttonText}>Register</Text>
-          </TouchableOpacity>
+        <TouchableOpacity
+        onPress={async () => {
+        await create();
+        navigation.navigate('Login');
+          }}
+        activeOpacity={0.5}
+        >
+        <Text style={styles.buttonText}>Register</Text>
+        </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
@@ -97,7 +125,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     flex : 1,
     alignSelf: 'flex-start',
-    marginTop: -150,
+    marginTop: 150,
     paddingHorizontal: 30,
     
   },

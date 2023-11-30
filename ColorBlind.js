@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react"
 import { TouchableOpacity, Text, View, SafeAreaView, StyleSheet, Image, TextInput, Alert } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
+import { doc, setDoc,collection, onSnapshot, updateDoc } from "firebase/firestore"; 
+import {db} from './firebaseConfig';
 
 const PlaceholderImage = require('./assets/logo.png');
 const Image5 = require('./assets/5.jpg');
@@ -15,7 +18,13 @@ const Image74 = require('./assets/74.jpg');
 const Image96 = require('./assets/96.jpg');
 const Refresh = require('./assets/refresh.png');
 
-function ColorBlind({ navigation }) {
+function ColorBlind({ route }) {
+  const navigation = useNavigation();
+
+  const paramKeyValue = route.params.paramKey;
+  useEffect(() => {
+    console.log(paramKeyValue); // Output the value of 'paramey' to the console
+  }, []);
     const [num5, setNum5] = useState('');
     const [num7, setNum7] = useState('');
     const [num8, setNum8] = useState('');
@@ -27,7 +36,7 @@ function ColorBlind({ navigation }) {
     const [num74, setNum74] = useState('');
     const [num96, setNum96] = useState('');
     const [count, setCount] = useState('');
-    
+    const [color, setColor] = useState('');
     
     const handleCalculate = () => {
       let count = 0; // Initialize count to 0
@@ -107,8 +116,24 @@ function ColorBlind({ navigation }) {
       setCount(count);
 
       if (count < 10) {
-        const result = ((10-count)*100 / 10).toFixed(2);
-        Alert.alert(`Your child has a ${result} % possibility to be colorblind`);
+        const color = ((10-count)*100 / 10).toFixed(2);
+        Alert.alert(`Your child has a ${color} % possibility to be colorblind`);
+        setColor(color);
+        create(); // Call the create() function
+        
+      }
+      function create() {
+        const docRef = doc(db, paramKeyValue, 'diagnosis');
+      
+        updateDoc(docRef, {
+          colorblind: color
+        })
+          .then(() => {
+            console.log('Data appended successfully');
+          })
+          .catch((error) => {
+            console.error('Error appending data:', error);
+          });
       }
       
     };

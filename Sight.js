@@ -1,12 +1,22 @@
-import * as React from 'react';
-import { useState } from 'react';
+
+import React, { useState, useEffect } from "react"
 import { ScrollView,TouchableOpacity, Text, View, SafeAreaView, StyleSheet, Image, TextInput, Alert } from 'react-native';
 import { CheckBox } from 'react-native-elements';
+import { doc, setDoc,collection, onSnapshot, updateDoc } from "firebase/firestore"; 
+import {db} from './firebaseConfig';
+import { useNavigation } from '@react-navigation/native';
 const PlaceholderImage = require('./assets/logo.png');
 
 
 
-function Sight({ navigation }) {
+function Sight({ route }) {
+
+   const navigation = useNavigation();
+
+   const paramKeyValue = route.params.paramKey;
+  useEffect(() => {
+    console.log(paramKeyValue); // Output the value of 'paramey' to the console
+  }, []);
     const [checked1, setChecked1] = useState(false);
     const [checked2, setChecked2] = useState(false);
     const [checked3, setChecked3] = useState(false);
@@ -18,6 +28,7 @@ function Sight({ navigation }) {
     const [checked9, setChecked9] = useState(false);
     const [checked10, setChecked10] = useState(false);
     const [count, setCount] = useState(0);
+    const [sight, setSight] = useState(0);
    
     const handleCalculate = () => {
       const sight = (100-(count / 10)*100).toFixed(2); // Calculate BMI with two decimal places
@@ -25,16 +36,38 @@ function Sight({ navigation }) {
       // Show the pop-up box
       Alert.alert(
         'Calculation Complete',
-        `You child has a ${sight}% probability of having weakened sight`,
-        
+        `Your child has a ${sight}% probability of having weakened sight`,
         [
-          { text: 'OK', onPress: () => console.log('OK Pressed') },
-          { text: 'Try the ColorBlind Test', onPress: () => navigation.navigate('ColorBlind') }
+          {
+            text: 'OK',
+            onPress: () => {
+              console.log('OK Pressed');
+              setSight(sight);
+              create(); // Call the create() function
+            }
+          },
+          {
+            text: 'Try the ColorBlind Test',
+            onPress: () => {
+              setSight(sight);
+              create(); // Set the sight state
+              navigation.navigate('ColorBlind', { paramKey: route.params.paramKey });
+            }
+          }
         ],
-        { cancelable: false },
-        console.log(count),
+        { cancelable: false }
       );
+      
+      console.log(count);
     };
+    function create(){
+      setDoc(doc(db,paramKeyValue,"diagnosis"), {
+      sight:sight,
+      
+      });}
+    
+  
+
 
     const handleCheckBox1 = () => {
       setChecked1(!checked1);

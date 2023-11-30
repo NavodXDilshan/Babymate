@@ -20,7 +20,9 @@ function Calculator() {
       [
         { text: 'OK', onPress: () => console.log('OK Pressed') },
         { text: 'More Info', onPress: () => navigation.navigate('BMIChart',{
-          paramKey: bmi
+          paramKey1: bmi
+         },{
+          paramKey2: age
          }) }
       ],
       { cancelable: false }

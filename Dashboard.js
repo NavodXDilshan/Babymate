@@ -1,9 +1,16 @@
-import * as React from 'react';
+import React, { useState, useEffect } from "react"
 import { TouchableOpacity, Text, View, SafeAreaView, StyleSheet, Image, TextInput } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const PlaceholderImage = require('./assets/logo.png');
 
-function Dashboard({ navigation }) {
+function Dashboard({route}) {
+  const navigation = useNavigation();
+
+  const paramKeyValue = route.params.paramKey;
+  useEffect(() => {
+    console.log(paramKeyValue); // Output the value of 'paramey' to the console
+  }, []);
  
   return (
     <SafeAreaView style={styles.container}>
@@ -11,7 +18,7 @@ function Dashboard({ navigation }) {
         
         <View style={styles.imageContainer}>
         <TouchableOpacity
-        onPress={() => navigation.navigate('Profile')}>
+        onPress={() => navigation.navigate('Profile',{ paramKey: route.params.paramKey })}>
           <Image source={PlaceholderImage} style={styles.image} /></TouchableOpacity>
           <View style={styles.lineBreak} />
           <Text>BabyMate</Text>
@@ -27,7 +34,7 @@ function Dashboard({ navigation }) {
   
         <View style={styles.buttonSContainer}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Diagnosis')}
+            onPress={() => navigation.navigate('Diagnosis',{ paramKey: route.params.paramKey })}
             activeOpacity={0.5}>
             <Text style={styles.buttonText}>Diagnosis</Text>
           </TouchableOpacity>
@@ -35,7 +42,7 @@ function Dashboard({ navigation }) {
       
         <View style={styles.buttonSContainer}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Record')}
+            onPress={() => navigation.navigate('Record',{ paramKey: route.params.paramKey })}
             activeOpacity={0.5}>
             <Text style={styles.buttonText}>Child Health Development Record</Text>
           </TouchableOpacity>

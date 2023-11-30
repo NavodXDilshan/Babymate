@@ -1,10 +1,19 @@
-import * as React from 'react';
-import { useState } from 'react';
+
+import React, { useState, useEffect } from "react"
 import { ScrollView,TouchableOpacity, Text, View, SafeAreaView, StyleSheet, Image, TextInput, Alert } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 const PlaceholderImage = require('./assets/logo.png');
+import { useNavigation } from '@react-navigation/native';
+import { doc, setDoc,collection, onSnapshot,updateDoc  } from "firebase/firestore"; 
+import {db} from './firebaseConfig';
 
-function Sight({ navigation }) {
+function Sight({ route }) {
+  const navigation = useNavigation();
+
+  const paramKeyValue = route.params.paramKey;
+  useEffect(() => {
+    console.log(paramKeyValue); // Output the value of 'paramey' to the console
+  }, []);
     const [checked1, setChecked1] = useState(false);
     const [checked2, setChecked2] = useState(false);
     const [checked3, setChecked3] = useState(false);
@@ -16,22 +25,43 @@ function Sight({ navigation }) {
     const [checked9, setChecked9] = useState(false);
     const [checked10, setChecked10] = useState(false);
     const [count, setCount] = useState(0);
+    const [hear, setHear] = useState(0);
    
     const handleCalculate = () => {
-      const sight = (100-(count / 10)*100).toFixed(2); // Calculate BMI with two decimal places
+      const hear = (100-(count / 10)*100).toFixed(2); // Calculate BMI with two decimal places
   
       // Show the pop-up box
       Alert.alert(
         'Calculation Complete',
-        `You child has a ${sight}% probability of having weakened hearing`,
+        `You child has a ${hear}% probability of having weakened hearing`,
+        setHear(hear),
         console.log(count),
         [
-          { text: 'OK', onPress: () => console.log('OK Pressed') },
-          { text: 'More Info', onPress: () => navigation.navigate('BMIChart') }
+          { text: 'OK',  onPress: () => {
+            console.log('OK Pressed');
+           
+             // Call the create() function
+          }},
+          
         ],
         { cancelable: false }
       );
     };
+
+    function create() {
+      const docRef = doc(db, paramKeyValue, 'diagnosis');
+    
+      updateDoc(docRef, {
+        hear: hear
+      })
+        .then(() => {
+          console.log('Data appended successfully');
+        })
+        .catch((error) => {
+          console.error('Error appending data:', error);
+        });
+    }
+    
 
     const handleCheckBox1 = () => {
       setChecked1(!checked1);
@@ -252,11 +282,15 @@ function Sight({ navigation }) {
         </View>
         <View style={styles.lineBreak} />
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={handleCalculate}
-            activeOpacity={0.5}>
-            <Text style={styles.buttonText}>Calculate</Text>
-          </TouchableOpacity>
+        <TouchableOpacity
+        onPress={() => {
+        handleCalculate();
+        create();
+        }}
+        activeOpacity={0.5}
+>
+  <Text style={styles.buttonText}>Calculate</Text>
+</TouchableOpacity>
         </View>
       </View>
       </ScrollView>

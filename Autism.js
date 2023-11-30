@@ -1,10 +1,19 @@
-import * as React from 'react';
-import { useState } from 'react';
+
+import React, { useState, useEffect } from "react"
 import { ScrollView,TouchableOpacity, Text, View, SafeAreaView, StyleSheet, Image, TextInput, Alert } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 const PlaceholderImage = require('./assets/logo.png');
+import { useNavigation } from '@react-navigation/native';
+import { doc, setDoc,collection, onSnapshot,updateDoc } from "firebase/firestore"; 
+import {db} from './firebaseConfig';
 
-function Autism({ navigation }) {
+function Autism({ route }) {
+  const navigation = useNavigation();
+
+  const paramKeyValue = route.params.paramKey;
+  useEffect(() => {
+    console.log(paramKeyValue); // Output the value of 'paramey' to the console
+  }, []);
     const [checked1, setChecked1] = useState(false);
     const [checked2, setChecked2] = useState(false);
     const [checked3, setChecked3] = useState(false);
@@ -25,6 +34,7 @@ function Autism({ navigation }) {
     const [checked18, setChecked18] = useState(false);
     const [checked19, setChecked19] = useState(false);
     const [checked20, setChecked20] = useState(false);
+    const [autism, setAutism] = useState(null);
    
 
     const [count, setCount] = useState(0);
@@ -47,16 +57,35 @@ function Autism({ navigation }) {
         'Calculation Complete',
         `Your child has a ${riskLevel} of suffering from Autism`,
 
-       
-        console.log(count),
+        
+        //console.log(count),
         [
-          { text: 'OK', onPress: () => console.log('OK Pressed') },
-          { text: 'More Info', onPress: () => navigation.navigate('BMIChart') }
+          { text: 'OK',             
+          onPress: () => {
+            setAutism(riskLevel),
+            create(); // Set the sight state
+            console.log("OK Pressed");
+          } },
+         
         ],
         { cancelable: false }
       );
      
     };
+
+    function create() {
+      const docRef = doc(db, paramKeyValue, 'diagnosis');
+    
+      updateDoc(docRef, {
+        Autism:autism
+      })
+        .then(() => {
+          console.log('Data appended successfully');
+        })
+        .catch((error) => {
+          console.error('Error appending data:', error);
+        });
+    }
 
     const handleCheckBox1 = () => {
       setChecked1(!checked1);
